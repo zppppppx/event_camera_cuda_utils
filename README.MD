@@ -22,3 +22,23 @@ A simple visualization of the normal flow is shown below, the normal flow only r
   <img src="https://github.com/zppppppx/event_camera_cuda_utils/blob/main/resources/imgs/normal_flow_extraction/accumulated_event_image.jpg" width="45%" alt="Accumulated Event Image"/>
   <img src="https://github.com/zppppppx/event_camera_cuda_utils/blob/main/resources/imgs/normal_flow_extraction/normal_flow_image.jpg" width="45%" alt="Normal Flow Image"/>
 </p>
+
+
+## Installation
+
+### Platform
+
+The utils are tested on Ubuntu22.04 with a few accessible GPU. CUDA version 12.x and later should be supported well
+
+### Compile
+
+To compile the project is quite easy, just make sure that nvcc compiler could be found in the $PATH or add corresponding flags in CMakeLists.txt to make sure that CMake could find the compiler. And then you may run the following commands to compile the project.
+
+```bash
+cmake . -B build
+cd build && make -j4
+```
+
+### Dependency
+
+- Eigen3
