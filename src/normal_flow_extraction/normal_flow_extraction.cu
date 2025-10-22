@@ -149,8 +149,8 @@ __global__ void normalFlowExtraction(
         return; 
     }
     
-    float nx = (float)(-best_a / g2);
-    float ny = (float)(-best_b / g2);
+    float nx = (float)(best_a / g2);
+    float ny = (float)(best_b / g2);
 
     if(sqrtf(nx * nx + ny * ny) > max_normal_length)
     {
