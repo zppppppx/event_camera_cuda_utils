@@ -13,6 +13,7 @@ __global__ void normalFlowExtraction(
     int ransac_iters,
     float inlier_threshold,
     float min_inlier_ratio,
+    float max_normal_length,
     unsigned global_seed,
     float* __restrict__ d_nx,
     float* __restrict__ d_ny)
@@ -147,9 +148,18 @@ __global__ void normalFlowExtraction(
         d_nx[idx] = 0.; d_ny[idx] = 0.; 
         return; 
     }
+    
+    float nx = (float)(-best_a / g2);
+    float ny = (float)(-best_b / g2);
 
-    d_nx[idx] = (float)(-best_a / g2);
-    d_ny[idx] = (float)(-best_b / g2);
+    if(sqrtf(nx * nx + ny * ny) > max_normal_length)
+    {
+        d_nx[idx] = 0.; d_ny[idx] = 0.; 
+        return; 
+    }
+
+    d_nx[idx] = nx;
+    d_ny[idx] = ny;
 }
 
 
@@ -198,6 +208,7 @@ void computeNormalFlow(
                                             static_cast<int>(params.ransac_iters), 
                                             static_cast<float>(params.inlier_threshold), 
                                             static_cast<float>(params.min_inlier_ratio), 
+                                            static_cast<float>(params.max_normal_length),
                                             static_cast<unsigned>(params.seed), 
                                             d_nx, d_ny);
     
@@ -285,6 +296,7 @@ void computeNormalFlow(
                                             static_cast<int>(params.ransac_iters), 
                                             static_cast<float>(params.inlier_threshold), 
                                             static_cast<float>(params.min_inlier_ratio), 
+                                            static_cast<float>(params.max_normal_length),
                                             static_cast<unsigned>(params.seed), 
                                             d_nx, d_ny);
     
