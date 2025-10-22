@@ -24,7 +24,7 @@ struct NormalFlowParams
 {
     unsigned neighbor_radius = 1;
     unsigned ransac_iters = 7;
-    float inlier_threshold = 2e-3f;
+    float inlier_threshold = 2.f;
     float min_inlier_ratio = 0.75f;
     unsigned seed = 12345u;
 };

@@ -8,7 +8,7 @@ To use this repo, you could directly extract a directory which is named by its u
 
 ### Normal Flow Extraction
 
-Currently implemented a simple ransac-based normal flow extraction, which indicates the direction of one event. This util accept a time surface as the input and the pixel value should be in the unit of seconds or you could modify corresponding thresholds to adapt to your scales. The normal flow is computed using its neighboring events and itself. Control parameters can be viewed in .cuh file.
+Currently implemented a simple ransac-based normal flow extraction, which indicates the direction of one event. This util accept a time surface as the input and the pixel value should be in the unit of milliseconds or you could modify corresponding thresholds to adapt to your scales. The normal flow is computed using its neighboring events and itself. Control parameters can be viewed in .cuh file.
 
 The statistics tested on a single RTX 3060 is shown below in the table.
 
