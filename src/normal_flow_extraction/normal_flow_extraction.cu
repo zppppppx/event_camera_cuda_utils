@@ -189,14 +189,11 @@ void computeNormalFlow(
     CUDA_CHECK(cudaMalloc(&d_nx, n_bytes));
     CUDA_CHECK(cudaMalloc(&d_ny, n_bytes));
 
-    const dim3 block(32, 16);
+    const dim3 block(16, 16);
     const dim3 grid((W + block.x - 1) / block.x, (H + block.y - 1) / block.y);
 
     // dynamic shared memory size: (blockDim + 2*R) tile of doubles
-    const int R_eff = static_cast<int>(params.neighbor_radius) < MAX_LOCAL_RADIUS ? static_cast<int>(params.neighbor_radius) : MAX_LOCAL_RADIUS;
-    const size_t shmem_bytes = static_cast<size_t>(block.x + 2 * R_eff) * static_cast<size_t>(block.y + 2 * R_eff) * sizeof(double);
-
-    normalFlowExtraction<<<grid, block, shmem_bytes>>>(d_sae, H, W, 
+    normalFlowExtraction<<<grid, block>>>(d_sae, H, W, 
                                             static_cast<int>(params.neighbor_radius), 
                                             static_cast<int>(params.ransac_iters), 
                                             static_cast<float>(params.inlier_threshold), 
@@ -280,13 +277,10 @@ void computeNormalFlow(
     CUDA_CHECK(cudaMalloc(&d_nx, n_bytes));
     CUDA_CHECK(cudaMalloc(&d_ny, n_bytes));
 
-    const dim3 block(32, 16);
+    const dim3 block(16, 16);
     const dim3 grid((W + block.x - 1) / block.x, (H + block.y - 1) / block.y);
 
-    const int R_eff = static_cast<int>(params.neighbor_radius) < MAX_LOCAL_RADIUS ? static_cast<int>(params.neighbor_radius) : MAX_LOCAL_RADIUS;
-    const size_t shmem_bytes = static_cast<size_t>(block.x + 2 * R_eff) * static_cast<size_t>(block.y + 2 * R_eff) * sizeof(double);
-
-    normalFlowExtraction<<<grid, block, shmem_bytes>>>(d_sae, H, W, 
+    normalFlowExtraction<<<grid, block>>>(d_sae, H, W, 
                                             static_cast<int>(params.neighbor_radius), 
                                             static_cast<int>(params.ransac_iters), 
                                             static_cast<float>(params.inlier_threshold), 
